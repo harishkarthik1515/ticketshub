@@ -1038,7 +1038,7 @@ export const states: State[] = [
     name: 'Maharashtra',
     city: 'Mumbai',
     events: allEvents.filter(event => event.state === 'Maharashtra').length,
-    image: 'https://images.pexels.com/photos/2363/india-gate-monument-new-delhi.jpg?auto=compress&cs=tinysrgb&w=800',
+    image: 'https://i.ibb.co/PZhBLrP5/1-pratapgarh-fort-mahabaleshwar-maharashtra-2-city-hero.jpg',
     gradient: 'from-orange-500 to-red-500'
   },
   {
