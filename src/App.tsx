@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
+import Preloader from './components/Preloader';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import Categories from './components/Categories';
@@ -25,6 +26,45 @@ function HomePage() {
 }
 
 function App() {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Preload critical resources
+    const preloadImages = [
+      '/ticketshub_logo.png',
+      '/concert-background.png'
+    ];
+
+    const imagePromises = preloadImages.map(src => {
+      return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.onload = resolve;
+        img.onerror = resolve; // Continue even if image fails
+        img.src = src;
+      });
+    });
+
+    // Wait for images and minimum time
+    Promise.all([
+      ...imagePromises,
+      new Promise(resolve => setTimeout(resolve, 5500)) // Minimum 5.5s for full experience
+    ]).then(() => {
+      // Small delay to ensure smooth transition
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 500);
+    });
+  }, []);
+
+  const handlePreloaderComplete = () => {
+    // Additional cleanup if needed
+    setIsLoading(false);
+  };
+
+  if (isLoading) {
+    return <Preloader onComplete={handlePreloaderComplete} />;
+  }
+
   return (
     <AuthProvider>
       <Router>
