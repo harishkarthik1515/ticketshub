@@ -24,6 +24,16 @@ export interface State {
   gradient: string;
 }
 
+// Function to get temporary events from session storage
+const getTempEvents = (): Event[] => {
+  try {
+    const tempEvents = sessionStorage.getItem('temp_events');
+    return tempEvents ? JSON.parse(tempEvents) : [];
+  } catch {
+    return [];
+  }
+};
+
 // All Events Database
 export const allEvents: Event[] = [
   // Mumbai Events
@@ -1032,33 +1042,39 @@ export const allEvents: Event[] = [
   }
 ];
 
+// Combine static events with temporary events
+export const getAllEventsWithTemp = (): Event[] => {
+  const tempEvents = getTempEvents();
+  return [...tempEvents, ...allEvents];
+};
+
 // States Database
 export const states: State[] = [
   {
     name: 'Maharashtra',
     city: 'Mumbai',
-    events: allEvents.filter(event => event.state === 'Maharashtra').length,
-    image: 'https://i.ibb.co/PZhBLrP5/1-pratapgarh-fort-mahabaleshwar-maharashtra-2-city-hero.jpg',
+    events: getAllEventsWithTemp().filter(event => event.state === 'Maharashtra').length,
+    image: 'https://images.pexels.com/photos/2363/india-gate-monument-new-delhi.jpg?auto=compress&cs=tinysrgb&w=800',
     gradient: 'from-orange-500 to-red-500'
   },
   {
     name: 'Karnataka',
     city: 'Bangalore',
-    events: allEvents.filter(event => event.state === 'Karnataka').length,
+    events: getAllEventsWithTemp().filter(event => event.state === 'Karnataka').length,
     image: 'https://images.pexels.com/photos/1007426/pexels-photo-1007426.jpeg?auto=compress&cs=tinysrgb&w=800',
     gradient: 'from-green-500 to-teal-500'
   },
   {
     name: 'Delhi',
     city: 'New Delhi',
-    events: allEvents.filter(event => event.state === 'Delhi').length,
+    events: getAllEventsWithTemp().filter(event => event.state === 'Delhi').length,
     image: 'https://images.pexels.com/photos/789750/pexels-photo-789750.jpeg?auto=compress&cs=tinysrgb&w=800',
     gradient: 'from-blue-500 to-purple-500'
   },
   {
     name: 'Tamil Nadu',
     city: 'Chennai',
-    events: allEvents.filter(event => event.state === 'Tamil Nadu').length,
+    events: getAllEventsWithTemp().filter(event => event.state === 'Tamil Nadu').length,
     image: 'https://images.pexels.com/photos/3573382/pexels-photo-3573382.jpeg?auto=compress&cs=tinysrgb&w=800',
     gradient: 'from-pink-500 to-rose-500'
   },
@@ -1072,7 +1088,7 @@ export const states: State[] = [
   {
     name: 'Rajasthan',
     city: 'Jaipur',
-    events: allEvents.filter(event => event.state === 'Rajasthan').length,
+    events: getAllEventsWithTemp().filter(event => event.state === 'Rajasthan').length,
     image: 'https://images.pexels.com/photos/3581368/pexels-photo-3581368.jpeg?auto=compress&cs=tinysrgb&w=800',
     gradient: 'from-purple-500 to-indigo-500'
   },
@@ -1100,7 +1116,7 @@ export const states: State[] = [
   {
     name: 'Goa',
     city: 'Panaji',
-    events: allEvents.filter(event => event.state === 'Goa').length,
+    events: getAllEventsWithTemp().filter(event => event.state === 'Goa').length,
     image: 'https://images.pexels.com/photos/3573382/pexels-photo-3573382.jpeg?auto=compress&cs=tinysrgb&w=800',
     gradient: 'from-teal-500 to-green-500'
   }
@@ -1108,15 +1124,15 @@ export const states: State[] = [
 
 // Database Query Functions
 export const getEventsByTag = (tag: string): Event[] => {
-  return allEvents.filter(event => event.tags?.includes(tag));
+  return getAllEventsWithTemp().filter(event => event.tags?.includes(tag));
 };
 
 export const getEventsByState = (stateName: string): Event[] => {
-  return allEvents.filter(event => event.state === stateName);
+  return getAllEventsWithTemp().filter(event => event.state === stateName);
 };
 
 export const getEventsByLocation = (location: string): Event[] => {
-  return allEvents.filter(event => event.location === location);
+  return getAllEventsWithTemp().filter(event => event.location === location);
 };
 
 export const getEventsByCategory = (category: string): Event[] => {
@@ -1140,11 +1156,11 @@ export const getEventsByCategory = (category: string): Event[] => {
   };
 
   if (category === 'all') {
-    return allEvents;
+    return getAllEventsWithTemp();
   }
 
   const mappedCategories = categoryMap[category.toLowerCase()] || [category];
-  return allEvents.filter(event => 
+  return getAllEventsWithTemp().filter(event => 
     mappedCategories.some(cat => 
       event.category.toLowerCase() === cat.toLowerCase()
     )
@@ -1152,11 +1168,11 @@ export const getEventsByCategory = (category: string): Event[] => {
 };
 
 export const getFeaturedEvents = (): Event[] => {
-  return allEvents.filter(event => event.featured);
+  return getAllEventsWithTemp().filter(event => event.featured);
 };
 
 export const getEventById = (id: number): Event | undefined => {
-  return allEvents.find(event => event.id === id);
+  return getAllEventsWithTemp().find(event => event.id === id);
 };
 
 // Category-specific getters
@@ -1169,7 +1185,7 @@ export const getLiveEvents = (): Event[] => getEventsByTag('live');
 // Search function
 export const searchEvents = (query: string): Event[] => {
   const lowercaseQuery = query.toLowerCase();
-  return allEvents.filter(event => 
+  return getAllEventsWithTemp().filter(event => 
     event.title.toLowerCase().includes(lowercaseQuery) ||
     event.category.toLowerCase().includes(lowercaseQuery) ||
     event.location.toLowerCase().includes(lowercaseQuery) ||

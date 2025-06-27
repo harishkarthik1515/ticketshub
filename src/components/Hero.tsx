@@ -1,18 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ChevronLeft, ChevronRight, Calendar, MapPin, Star, Play, Sparkles, ArrowRight, Eye } from 'lucide-react';
-import { getFeaturedEvents } from '../data/mockDatabase';
+import { ChevronLeft, ChevronRight, Calendar, MapPin, Star } from 'lucide-react';
+import { getFeaturedEvents, getAllEventsWithTemp } from '../data/mockDatabase';
 
 const Hero = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const navigate = useNavigate();
-  const featuredEvents = getFeaturedEvents();
+  
+  // Get featured events including temporary ones
+  const allEvents = getAllEventsWithTemp();
+  const featuredEvents = allEvents.filter(event => event.featured);
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % featuredEvents.length);
-    }, 4000);
-    return () => clearInterval(timer);
+    if (featuredEvents.length > 0) {
+      const timer = setInterval(() => {
+        setCurrentSlide((prev) => (prev + 1) % featuredEvents.length);
+      }, 4000);
+      return () => clearInterval(timer);
+    }
   }, [featuredEvents.length]);
 
   const nextSlide = () => {
@@ -66,6 +71,57 @@ const Hero = () => {
     };
     return styles[position as keyof typeof styles] || styles.hidden;
   };
+
+  if (featuredEvents.length === 0) {
+    return (
+      <section className="relative min-h-screen w-full overflow-hidden">
+        <div className="absolute inset-0">
+          <div 
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            style={{
+              backgroundImage: `
+                url('/concert-background.png'),
+                url('https://images.pexels.com/photos/1190298/pexels-photo-1190298.jpeg?auto=compress&cs=tinysrgb&w=1600'),
+                linear-gradient(135deg, #667eea 0%, #764ba2 100%)
+              `,
+              clipPath: 'polygon(0 0, 75% 0, 100% 100%, 0 100%)'
+            }}
+          />
+          <div 
+            className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/30"
+            style={{
+              clipPath: 'polygon(0 0, 75% 0, 100% 100%, 0 100%)'
+            }}
+          />
+        </div>
+        
+        <div className="relative z-10 min-h-screen flex items-center px-4 sm:px-6 lg:px-8 pt-16 sm:pt-20">
+          <div className="max-w-7xl mx-auto w-full">
+            <div className="text-left">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 sm:mb-6 leading-tight drop-shadow-2xl">
+                Discover Amazing
+                <span className="block bg-gradient-to-r from-yellow-400 via-pink-400 to-blue-400 bg-clip-text text-transparent drop-shadow-lg">
+                  Experiences
+                </span>
+              </h1>
+              <p className="text-base sm:text-lg lg:text-xl text-white/95 mb-6 sm:mb-8 leading-relaxed drop-shadow-lg">
+                Book tickets for movies, concerts, sports & more
+              </p>
+              
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+                <button 
+                  onClick={handleExploreEvents}
+                  className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-semibold text-base sm:text-lg hover:from-purple-700 hover:to-pink-700 transform hover:scale-105 transition-all duration-200 shadow-xl"
+                >
+                  Explore Events
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="relative min-h-screen w-full overflow-hidden">
@@ -122,80 +178,20 @@ const Hero = () => {
               Book tickets for movies, concerts, sports & more
             </p>
             
-            {/* Enhanced CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
-              {/* Primary CTA - Explore Events */}
+            {/* CTA Buttons */}
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
               <button 
                 onClick={handleExploreEvents}
-                className="group relative overflow-hidden bg-gradient-to-r from-purple-600 via-purple-700 to-pink-600 text-white px-8 sm:px-10 py-4 sm:py-5 rounded-2xl font-bold text-base sm:text-lg shadow-2xl hover:shadow-purple-500/25 transform hover:scale-105 transition-all duration-300 ease-out"
+                className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-semibold text-base sm:text-lg hover:from-purple-700 hover:to-pink-700 transform hover:scale-105 transition-all duration-200 shadow-xl"
               >
-                {/* Animated Background Gradient */}
-                <div className="absolute inset-0 bg-gradient-to-r from-purple-500 via-pink-500 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-out"></div>
-                
-                {/* Shimmer Effect */}
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out"></div>
-                
-                {/* Button Content */}
-                <div className="relative flex items-center justify-center space-x-3">
-                  <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 group-hover:rotate-180 transition-transform duration-500 ease-out" />
-                  <span className="tracking-wide">Explore Events</span>
-                  <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 group-hover:translate-x-1 transition-transform duration-300 ease-out" />
-                </div>
-                
-                {/* Glow Effect */}
-                <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-pink-600 rounded-2xl blur opacity-0 group-hover:opacity-50 transition-opacity duration-500 ease-out -z-10"></div>
-                
-                {/* Pulse Ring */}
-                <div className="absolute inset-0 rounded-2xl border-2 border-purple-400/30 group-hover:animate-ping"></div>
+                Explore Events
               </button>
-              
-              {/* Secondary CTA - View Featured Event */}
               <button 
                 onClick={handleWatchTrailer}
-                className="group relative overflow-hidden bg-white/10 backdrop-blur-md text-white px-8 sm:px-10 py-4 sm:py-5 rounded-2xl font-bold text-base sm:text-lg border-2 border-white/20 hover:border-white/40 shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 ease-out"
+                className="bg-white/20 backdrop-blur-sm text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-semibold text-base sm:text-lg hover:bg-white/30 transition-all duration-200 border border-white/30 shadow-lg"
               >
-                {/* Animated Background */}
-                <div className="absolute inset-0 bg-gradient-to-r from-white/5 via-white/10 to-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-out"></div>
-                
-                {/* Ripple Effect */}
-                <div className="absolute inset-0 bg-white/5 rounded-2xl scale-0 group-hover:scale-100 transition-transform duration-500 ease-out"></div>
-                
-                {/* Button Content */}
-                <div className="relative flex items-center justify-center space-x-3">
-                  <div className="relative">
-                    <Play className="w-5 h-5 sm:w-6 sm:h-6 group-hover:scale-110 transition-transform duration-300 ease-out" />
-                    {/* Play Button Glow */}
-                    <div className="absolute inset-0 bg-white/30 rounded-full blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-out"></div>
-                  </div>
-                  <span className="tracking-wide">View Featured</span>
-                  <Eye className="w-5 h-5 sm:w-6 sm:h-6 group-hover:scale-110 transition-transform duration-300 ease-out" />
-                </div>
-                
-                {/* Border Glow */}
-                <div className="absolute -inset-1 bg-gradient-to-r from-white/20 to-white/20 rounded-2xl blur opacity-0 group-hover:opacity-60 transition-opacity duration-500 ease-out -z-10"></div>
-                
-                {/* Corner Accents */}
-                <div className="absolute top-0 left-0 w-6 h-6 border-t-2 border-l-2 border-white/40 rounded-tl-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-out"></div>
-                <div className="absolute top-0 right-0 w-6 h-6 border-t-2 border-r-2 border-white/40 rounded-tr-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-out"></div>
-                <div className="absolute bottom-0 left-0 w-6 h-6 border-b-2 border-l-2 border-white/40 rounded-bl-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-out"></div>
-                <div className="absolute bottom-0 right-0 w-6 h-6 border-b-2 border-r-2 border-white/40 rounded-br-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-out"></div>
+                View Featured Event
               </button>
-            </div>
-
-            {/* Enhanced Feature Highlights */}
-            <div className="mt-8 sm:mt-12 flex flex-wrap items-center gap-4 sm:gap-6 text-white/80">
-              <div className="flex items-center space-x-2 group">
-                <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse group-hover:scale-125 transition-transform duration-300"></div>
-                <span className="text-sm sm:text-base font-medium group-hover:text-white transition-colors duration-300">Instant Booking</span>
-              </div>
-              <div className="flex items-center space-x-2 group">
-                <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse group-hover:scale-125 transition-transform duration-300" style={{ animationDelay: '0.5s' }}></div>
-                <span className="text-sm sm:text-base font-medium group-hover:text-white transition-colors duration-300">Secure Payment</span>
-              </div>
-              <div className="flex items-center space-x-2 group">
-                <div className="w-2 h-2 bg-purple-400 rounded-full animate-pulse group-hover:scale-125 transition-transform duration-300" style={{ animationDelay: '1s' }}></div>
-                <span className="text-sm sm:text-base font-medium group-hover:text-white transition-colors duration-300">Mobile Tickets</span>
-              </div>
             </div>
           </div>
 
@@ -279,14 +275,12 @@ const Hero = () => {
                               e.stopPropagation();
                               handleBookNow(event.id);
                             }}
-                            className="group relative overflow-hidden bg-gradient-to-r from-purple-600 to-pink-600 
+                            className="bg-gradient-to-r from-purple-600 to-pink-600 
                             text-white px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg font-semibold text-xs sm:text-sm
                             hover:from-purple-700 hover:to-pink-700 transform hover:scale-105 
                             transition-all duration-200 shadow-lg"
                           >
-                            {/* Button Shimmer */}
-                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out"></div>
-                            <span className="relative">Book Now</span>
+                            Book Now
                           </button>
                         )}
                       </div>
@@ -302,11 +296,10 @@ const Hero = () => {
         <div className="absolute bottom-4 sm:bottom-8 left-1/2 transform -translate-x-1/2 flex items-center space-x-4 sm:space-x-6">
           <button
             onClick={prevSlide}
-            className="group bg-white/20 backdrop-blur-sm text-white p-2 sm:p-3 rounded-full 
-              hover:bg-white/30 transition-all duration-200 border border-white/30 shadow-lg
-              hover:scale-110 hover:shadow-xl"
+            className="bg-white/20 backdrop-blur-sm text-white p-2 sm:p-3 rounded-full 
+              hover:bg-white/30 transition-all duration-200 border border-white/30 shadow-lg"
           >
-            <ChevronLeft className="w-4 sm:w-6 h-4 sm:h-6 group-hover:-translate-x-0.5 transition-transform duration-200" />
+            <ChevronLeft className="w-4 sm:w-6 h-4 sm:h-6" />
           </button>
           
           <div className="flex space-x-2">
@@ -314,8 +307,8 @@ const Hero = () => {
               <button
                 key={index}
                 onClick={() => setCurrentSlide(index)}
-                className={`w-2 sm:w-3 h-2 sm:h-3 rounded-full transition-all duration-200 hover:scale-125 ${
-                  index === currentSlide ? 'bg-white shadow-lg' : 'bg-white/40 hover:bg-white/60'
+                className={`w-2 sm:w-3 h-2 sm:h-3 rounded-full transition-all duration-200 ${
+                  index === currentSlide ? 'bg-white' : 'bg-white/40'
                 }`}
               />
             ))}
@@ -323,11 +316,10 @@ const Hero = () => {
           
           <button
             onClick={nextSlide}
-            className="group bg-white/20 backdrop-blur-sm text-white p-2 sm:p-3 rounded-full 
-              hover:bg-white/30 transition-all duration-200 border border-white/30 shadow-lg
-              hover:scale-110 hover:shadow-xl"
+            className="bg-white/20 backdrop-blur-sm text-white p-2 sm:p-3 rounded-full 
+              hover:bg-white/30 transition-all duration-200 border border-white/30 shadow-lg"
           >
-            <ChevronRight className="w-4 sm:w-6 h-4 sm:h-6 group-hover:translate-x-0.5 transition-transform duration-200" />
+            <ChevronRight className="w-4 sm:w-6 h-4 sm:h-6" />
           </button>
         </div>
       </div>

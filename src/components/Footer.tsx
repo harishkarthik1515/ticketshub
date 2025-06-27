@@ -1,7 +1,10 @@
 import React from 'react';
-import { Facebook, Twitter, Instagram, Youtube, Mail, Phone, MapPin } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { Facebook, Twitter, Instagram, Youtube, Mail, Phone, MapPin, Settings } from 'lucide-react';
 
 const Footer = () => {
+  const navigate = useNavigate();
+
   const footerSections = [
     {
       title: "Categories",
@@ -28,8 +31,31 @@ const Footer = () => {
     { icon: Youtube, href: "#", color: "hover:text-red-600" }
   ];
 
+  const handleManagementClick = () => {
+    navigate('/management');
+  };
+
   return (
     <footer className="bg-gray-900 text-white">
+      {/* Management Portal CTA */}
+      <div className="bg-gradient-to-r from-purple-600 to-pink-600 py-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col md:flex-row items-center justify-between">
+            <div className="text-center md:text-left mb-4 md:mb-0">
+              <h3 className="text-2xl font-bold text-white mb-2">Are you an Event Organizer?</h3>
+              <p className="text-white/90">Join our management platform to create and manage events, connect with vendors, speakers, and sponsors.</p>
+            </div>
+            <button
+              onClick={handleManagementClick}
+              className="bg-white text-purple-600 px-8 py-3 rounded-xl font-bold hover:bg-gray-100 transition-all duration-200 flex items-center space-x-2 group"
+            >
+              <Settings className="w-5 h-5 group-hover:rotate-90 transition-transform duration-300" />
+              <span>Management Portal</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
       {/* Main Footer */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-8">

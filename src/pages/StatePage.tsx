@@ -15,20 +15,8 @@ const StatePage = () => {
   const stateData = states.find(state => state.name === stateName);
   const events = getEventsByState(stateName || '');
 
-  const handleEventClick = (eventId: number) => {
-    navigate(`/event/${eventId}`);
-  };
-
-  const handleBookNow = (e: React.MouseEvent, eventId: number) => {
-    e.stopPropagation();
-    navigate(`/event/${eventId}`);
-  };
-
   const EventCard: React.FC<{ event: Event }> = ({ event }) => (
-    <div 
-      className="group cursor-pointer bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-2"
-      onClick={() => handleEventClick(event.id)}
-    >
+    <div className="group cursor-pointer bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
       {/* Image Container */}
       <div className="relative h-48 overflow-hidden">
         <img
@@ -87,10 +75,7 @@ const StatePage = () => {
             <p className="text-2xl font-bold text-purple-600">{event.price}</p>
           </div>
           
-          <button 
-            onClick={(e) => handleBookNow(e, event.id)}
-            className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-6 py-2 rounded-lg font-semibold hover:from-purple-700 hover:to-pink-700 transform hover:scale-105 transition-all duration-200"
-          >
+          <button className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-6 py-2 rounded-lg font-semibold hover:from-purple-700 hover:to-pink-700 transform hover:scale-105 transition-all duration-200">
             Book Now
           </button>
         </div>

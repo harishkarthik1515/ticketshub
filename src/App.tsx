@@ -13,6 +13,7 @@ import StatePage from './pages/StatePage';
 import EventDetailsPage from './pages/EventDetailsPage';
 import BookingPage from './pages/BookingPage';
 import ProfilePage from './pages/ProfilePage';
+import ManagementApp from './management/ManagementApp';
 
 function HomePage() {
   return (
@@ -22,6 +23,25 @@ function HomePage() {
       <StateSelector />
       <TrendingEvents />
     </>
+  );
+}
+
+function MainApp() {
+  return (
+    <AuthProvider>
+      <div className="min-h-screen bg-white">
+        <Header />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/category/:category" element={<CategoryPage />} />
+          <Route path="/state/:stateName" element={<StatePage />} />
+          <Route path="/event/:eventId" element={<EventDetailsPage />} />
+          <Route path="/booking/:eventId" element={<BookingPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
+        </Routes>
+        <Footer />
+      </div>
+    </AuthProvider>
   );
 }
 
@@ -81,22 +101,15 @@ function App() {
   }
 
   return (
-    <AuthProvider>
-      <Router>
-        <div className="min-h-screen bg-white">
-          <Header />
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/category/:category" element={<CategoryPage />} />
-            <Route path="/state/:stateName" element={<StatePage />} />
-            <Route path="/event/:eventId" element={<EventDetailsPage />} />
-            <Route path="/booking/:eventId" element={<BookingPage />} />
-            <Route path="/profile" element={<ProfilePage />} />
-          </Routes>
-          <Footer />
-        </div>
-      </Router>
-    </AuthProvider>
+    <Router>
+      <Routes>
+        {/* Management Subdomain Routes */}
+        <Route path="/management/*" element={<ManagementApp />} />
+        
+        {/* Main Domain Routes */}
+        <Route path="/*" element={<MainApp />} />
+      </Routes>
+    </Router>
   );
 }
 
