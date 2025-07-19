@@ -4,9 +4,6 @@ const nextConfig = {
     domains: ['images.pexels.com', 'i.ibb.co'],
     unoptimized: true
   },
-  experimental: {
-    appDir: true
-  },
   async rewrites() {
     return [
     ];
