@@ -50,6 +50,11 @@
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/event/[eventId]/page.js"
+    ],
+    "/booking/[eventId]/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/booking/[eventId]/page.js"
     ]
   }
 }
