@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { ChevronLeft, ChevronRight, Calendar, MapPin, Star, Users, Building, Mic, DollarSign, ArrowRight, CheckCircle, Shield, Zap, Globe } from 'lucide-react';
 import ManagementAuthModal from '../components/ManagementAuthModal';
 
 const ManagementLanding = () => {
-  const navigate = useNavigate();
+  const router = useRouter();
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [authMode, setAuthMode] = useState<'signin' | 'signup'>('signin');
   const [selectedRole, setSelectedRole] = useState<'organizer' | 'vendor' | 'speaker' | 'sponsor'>('organizer');
@@ -513,7 +513,7 @@ const ManagementLanding = () => {
                 The ultimate platform for event professionals. Connect, collaborate, and create extraordinary experiences together.
               </p>
               <button
-                onClick={() => navigate('/')}
+                onClick={() => router.push('/')}
                 className="text-purple-400 hover:text-purple-300 transition-colors duration-200 flex items-center space-x-2"
               >
                 <ArrowRight className="w-4 h-4" />
@@ -553,7 +553,7 @@ const ManagementLanding = () => {
         onClose={() => setShowAuthModal(false)}
         mode={authMode}
         selectedRole={selectedRole}
-        onSuccess={() => navigate('/management/dashboard')}
+        onSuccess={() => router.push('/management/dashboard')}
       />
     </div>
   );

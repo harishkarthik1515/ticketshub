@@ -1,12 +1,12 @@
 import React from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useRouter, usePathname } from 'next/navigation';
 import { ChevronRight, Home } from 'lucide-react';
 
 const Breadcrumbs = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
+  const router = useRouter();
+  const pathname = usePathname();
 
-  const pathSegments = location.pathname.split('/').filter(Boolean);
+  const pathSegments = pathname.split('/').filter(Boolean);
   
   const breadcrumbItems = [
     { label: 'Home', path: '/management/dashboard', icon: Home }
@@ -38,7 +38,7 @@ const Breadcrumbs = () => {
         <React.Fragment key={item.path}>
           {index > 0 && <ChevronRight className="w-4 h-4 text-gray-400" />}
           <button
-            onClick={() => navigate(item.path)}
+            onClick={() => router.push(item.path)}
             className={`flex items-center space-x-1 hover:text-purple-600 transition-colors duration-200 ${
               index === breadcrumbItems.length - 1
                 ? 'text-purple-600 font-medium'

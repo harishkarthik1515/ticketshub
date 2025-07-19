@@ -1,9 +1,9 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { Facebook, Twitter, Instagram, Youtube, Mail, Phone, MapPin, Settings } from 'lucide-react';
 
 const Footer = () => {
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const footerSections = [
     {
@@ -32,7 +32,7 @@ const Footer = () => {
   ];
 
   const handleManagementClick = () => {
-    navigate('/management');
+    router.push('/management');
   };
 
   return (

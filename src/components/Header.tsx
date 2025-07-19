@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { Search, MapPin, User, Menu, X } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import AuthModal from './AuthModal';
@@ -11,7 +11,7 @@ const Header = () => {
   const [showAuthModal, setShowAuthModal] = useState(false);
   
   const { user, isAuthenticated, logout } = useAuth();
-  const navigate = useNavigate();
+  const router = useRouter();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -46,7 +46,7 @@ const Header = () => {
 
   const handleUserAction = () => {
     if (isAuthenticated) {
-      navigate('/profile');
+      router.push('/profile');
     } else {
       setShowAuthModal(true);
     }
@@ -58,7 +58,7 @@ const Header = () => {
   };
 
   const handleNavigation = (path: string) => {
-    navigate(path);
+    router.push(path);
     setIsMenuOpen(false);
   };
 
@@ -82,7 +82,7 @@ const Header = () => {
             <div 
               className="flex items-center flex-shrink-0 cursor-pointer min-w-0" 
               onClick={() => {
-                navigate('/');
+                router.push('/');
                 setIsMenuOpen(false);
               }}
             >
@@ -99,31 +99,31 @@ const Header = () => {
             {!isScrolled && (
               <nav className="hidden lg:flex items-center space-x-4 xl:space-x-6 flex-shrink-0">
                 <button 
-                  onClick={() => navigate('/category/movies')}
+                  onClick={() => router.push('/category/movies')}
                   className="text-gray-700 hover:text-purple-600 transition-colors duration-200 font-medium text-sm xl:text-base whitespace-nowrap"
                 >
                   Movies
                 </button>
                 <button 
-                  onClick={() => navigate('/category/concerts')}
+                  onClick={() => router.push('/category/concerts')}
                   className="text-gray-700 hover:text-purple-600 transition-colors duration-200 font-medium text-sm xl:text-base whitespace-nowrap"
                 >
                   Concerts
                 </button>
                 <button 
-                  onClick={() => navigate('/category/sports')}
+                  onClick={() => router.push('/category/sports')}
                   className="text-gray-700 hover:text-purple-600 transition-colors duration-200 font-medium text-sm xl:text-base whitespace-nowrap"
                 >
                   Sports
                 </button>
                 <button 
-                  onClick={() => navigate('/category/theater')}
+                  onClick={() => router.push('/category/theater')}
                   className="text-gray-700 hover:text-purple-600 transition-colors duration-200 font-medium text-sm xl:text-base whitespace-nowrap"
                 >
                   Theater
                 </button>
                 <button 
-                  onClick={() => navigate('/category/events')}
+                  onClick={() => router.push('/category/events')}
                   className="text-gray-700 hover:text-purple-600 transition-colors duration-200 font-medium text-sm xl:text-base whitespace-nowrap"
                 >
                   Events

@@ -1,11 +1,11 @@
 import React, { useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { MapPin, ChevronRight, ChevronLeft } from 'lucide-react';
 import { states } from '../data/mockDatabase';
 
 const StateSelector = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const scroll = (direction: 'left' | 'right') => {
     if (scrollRef.current) {
@@ -19,7 +19,7 @@ const StateSelector = () => {
 
   const handleStateClick = (state: any) => {
     console.log(`Navigating to ${state.name} - ${state.city}`);
-    navigate(`/state/${state.name}`);
+    router.push(`/state/${state.name}`);
   };
 
   return (

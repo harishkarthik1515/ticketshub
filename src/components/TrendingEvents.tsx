@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import HorizontalEventSlider from './HorizontalEventSlider';
 import { TrendingUp, Flame, Star, TreePine, Music } from 'lucide-react';
 import { 
@@ -12,10 +12,10 @@ import {
 } from '../data/mockDatabase';
 
 const TrendingEvents = () => {
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const handleViewMore = (category: string) => {
-    navigate(`/category/${category}`);
+    router.push(`/category/${category}`);
   };
 
   // Use the function that includes temporary events

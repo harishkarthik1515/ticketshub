@@ -3,7 +3,7 @@ import {
   Calendar, Plus, Users, TrendingUp, Clock, MapPin, 
   Star, Eye, Edit, Trash2, MessageSquare, Target, CheckCircle, Zap
 } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { useManagementAuth } from '../../contexts/ManagementAuthContext';
 import { getEventsByOrganizer, getConnectionsByUser } from '../../data/mockDatabase';
 import Breadcrumbs from '../Breadcrumbs';
@@ -12,7 +12,7 @@ import BarChart from '../charts/BarChart';
 import PieChart from '../charts/PieChart';
 
 const OrganizerDashboard = () => {
-  const navigate = useNavigate();
+  const router = useRouter();
   const { user } = useManagementAuth();
   const [activeTab, setActiveTab] = useState('overview');
 
@@ -98,7 +98,7 @@ const OrganizerDashboard = () => {
   ];
 
   const handleCreateEvent = () => {
-    navigate('/management/create-event');
+    router.push('/management/create-event');
   };
 
   return (

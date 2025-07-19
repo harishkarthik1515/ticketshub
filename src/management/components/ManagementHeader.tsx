@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { Search, MapPin, User, Menu, X, Bell } from 'lucide-react';
 import { useManagementAuth } from '../contexts/ManagementAuthContext';
 import { getNotificationsByUser } from '../data/mockDatabase';
@@ -7,7 +7,7 @@ import ManagementAuthModal from './ManagementAuthModal';
 import RoleSelectionModal from './RoleSelectionModal';
 
 const ManagementHeader = () => {
-  const navigate = useNavigate();
+  const router = useRouter();
   const { user, logout, isAuthenticated } = useManagementAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchFocused, setIsSearchFocused] = useState(false);
@@ -65,7 +65,7 @@ const ManagementHeader = () => {
   const handleLogout = () => {
     logout();
     setShowUserMenu(false);
-    navigate('/management');
+    router.push('/management');
   };
 
   const handleSignIn = () => {
@@ -86,7 +86,7 @@ const ManagementHeader = () => {
 
   const handleAuthSuccess = () => {
     setShowAuthModal(false);
-    navigate('/management/dashboard');
+    router.push('/management/dashboard');
   };
 
   const getRoleDisplayName = (role: string) => {
@@ -124,7 +124,7 @@ const ManagementHeader = () => {
             <div 
               className="flex items-center flex-shrink-0 cursor-pointer min-w-0" 
               onClick={() => {
-                navigate('/management');
+                router.push('/management');
                 setIsMenuOpen(false);
               }}
             >
@@ -146,14 +146,14 @@ const ManagementHeader = () => {
             {!isScrolled && user && (
               <nav className="hidden lg:flex items-center space-x-4 xl:space-x-6 flex-shrink-0">
                 <button 
-                  onClick={() => navigate('/management/dashboard')}
+                  onClick={() => router.push('/management/dashboard')}
                   className="text-gray-700 hover:text-purple-600 transition-colors duration-200 font-medium text-sm xl:text-base whitespace-nowrap"
                 >
                   Dashboard
                 </button>
                 {user.role === 'organizer' && (
                   <button 
-                    onClick={() => navigate('/management/events')}
+                    onClick={() => router.push('/management/events')}
                     className="text-gray-700 hover:text-purple-600 transition-colors duration-200 font-medium text-sm xl:text-base whitespace-nowrap"
                   >
                     My Events
@@ -162,13 +162,13 @@ const ManagementHeader = () => {
                 {user.role === 'admin' && (
                   <>
                     <button 
-                      onClick={() => navigate('/management/users')}
+                      onClick={() => router.push('/management/users')}
                       className="text-gray-700 hover:text-purple-600 transition-colors duration-200 font-medium text-sm xl:text-base whitespace-nowrap"
                     >
                       Users
                     </button>
                     <button 
-                      onClick={() => navigate('/management/events')}
+                      onClick={() => router.push('/management/events')}
                       className="text-gray-700 hover:text-purple-600 transition-colors duration-200 font-medium text-sm xl:text-base whitespace-nowrap"
                     >
                       All Events
@@ -304,7 +304,7 @@ const ManagementHeader = () => {
                       <div className="p-2">
                         <button
                           onClick={() => {
-                            navigate('/management/profile');
+                            router.push('/management/profile');
                             setShowUserMenu(false);
                           }}
                           className="w-full flex items-center space-x-2 px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors duration-200"
@@ -314,7 +314,7 @@ const ManagementHeader = () => {
                         </button>
                         <button
                           onClick={() => {
-                            navigate('/management/settings');
+                            router.push('/management/settings');
                             setShowUserMenu(false);
                           }}
                           className="w-full flex items-center space-x-2 px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors duration-200"
@@ -471,7 +471,7 @@ const ManagementHeader = () => {
                       
                       <button 
                         onClick={() => {
-                          navigate('/management/dashboard');
+                          router.push('/management/dashboard');
                           setIsMenuOpen(false);
                         }}
                         className="w-full flex items-center space-x-3 px-3 py-3 text-gray-700 hover:text-purple-600 hover:bg-purple-50 rounded-xl transition-all duration-200 font-medium text-left"
@@ -483,7 +483,7 @@ const ManagementHeader = () => {
                       {user.role === 'organizer' && (
                         <button 
                           onClick={() => {
-                            navigate('/management/events');
+                            router.push('/management/events');
                             setIsMenuOpen(false);
                           }}
                           className="w-full flex items-center space-x-3 px-3 py-3 text-gray-700 hover:text-purple-600 hover:bg-purple-50 rounded-xl transition-all duration-200 font-medium text-left"
@@ -497,7 +497,7 @@ const ManagementHeader = () => {
                         <>
                           <button 
                             onClick={() => {
-                              navigate('/management/users');
+                              router.push('/management/users');
                               setIsMenuOpen(false);
                             }}
                             className="w-full flex items-center space-x-3 px-3 py-3 text-gray-700 hover:text-purple-600 hover:bg-purple-50 rounded-xl transition-all duration-200 font-medium text-left"
@@ -508,7 +508,7 @@ const ManagementHeader = () => {
                           
                           <button 
                             onClick={() => {
-                              navigate('/management/events');
+                              router.push('/management/events');
                               setIsMenuOpen(false);
                             }}
                             className="w-full flex items-center space-x-3 px-3 py-3 text-gray-700 hover:text-purple-600 hover:bg-purple-50 rounded-xl transition-all duration-200 font-medium text-left"
@@ -535,7 +535,7 @@ const ManagementHeader = () => {
                         
                         <button 
                           onClick={() => {
-                            navigate('/management/profile');
+                            router.push('/management/profile');
                             setIsMenuOpen(false);
                           }}
                           className="w-full flex items-center space-x-3 px-3 py-3 text-gray-700 hover:text-purple-600 hover:bg-purple-50 rounded-xl transition-all duration-200 font-medium text-left"

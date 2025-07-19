@@ -1,9 +1,9 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { Film, Music, Trophy, Theater, Calendar, Gamepad2, Mic, Heart, Sparkles } from 'lucide-react';
 
 const Categories = () => {
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const categories = [
     {
@@ -97,12 +97,12 @@ const Categories = () => {
   ];
 
   const handleCategoryClick = (category: any) => {
-    navigate(category.route);
+    router.push(category.route);
   };
 
   const handleExploreAll = () => {
     // Navigate to a general events page or show all categories
-    navigate('/category/all');
+    router.push('/category/all');
   };
 
   return (

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { Calendar, MapPin, Star, Clock } from 'lucide-react';
 
 interface EventCardProps {
@@ -19,15 +19,15 @@ interface EventCardProps {
 }
 
 const EventCard: React.FC<EventCardProps> = ({ event }) => {
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const handleCardClick = () => {
-    navigate(`/event/${event.id}`);
+    router.push(`/event/${event.id}`);
   };
 
   const handleBookNow = (e: React.MouseEvent) => {
     e.stopPropagation();
-    navigate(`/event/${event.id}`);
+    router.push(`/event/${event.id}`);
   };
 
   return (

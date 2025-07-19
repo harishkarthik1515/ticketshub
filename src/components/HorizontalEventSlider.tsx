@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { ChevronLeft, ChevronRight, Calendar, MapPin, Star, Clock, ArrowRight } from 'lucide-react';
 
 interface Event {
@@ -33,7 +33,7 @@ const HorizontalEventSlider: React.FC<HorizontalEventSliderProps> = ({
   onViewMore
 }) => {
   const scrollRef = useRef<HTMLDivElement>(null);
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const scroll = (direction: 'left' | 'right') => {
     if (scrollRef.current) {
@@ -46,12 +46,12 @@ const HorizontalEventSlider: React.FC<HorizontalEventSliderProps> = ({
   };
 
   const handleEventClick = (eventId: number) => {
-    navigate(`/event/${eventId}`);
+    router.push(`/event/${eventId}`);
   };
 
   const handleBookNow = (e: React.MouseEvent, eventId: number) => {
     e.stopPropagation();
-    navigate(`/event/${eventId}`);
+    router.push(`/event/${eventId}`);
   };
 
   return (

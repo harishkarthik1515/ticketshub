@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useRouter, usePathname } from 'next/navigation';
 import { 
   LayoutDashboard, Users, Calendar, Settings, LogOut, 
   BarChart3, UserCheck, Building, Award, DollarSign,
@@ -8,13 +8,13 @@ import {
 import { useManagementAuth } from '../contexts/ManagementAuthContext';
 
 const Sidebar = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
+  const router = useRouter();
+  const pathname = usePathname();
   const { user, logout } = useManagementAuth();
 
   const handleLogout = () => {
     logout();
-    navigate('/management');
+    router.push('/management');
   };
 
   const getRoleIcon = (role: string) => {
@@ -116,12 +116,12 @@ const Sidebar = () => {
       <nav className="flex-1 p-4 space-y-2 overflow-y-auto">
         {menuItems.map((item) => {
           const Icon = item.icon;
-          const isActive = location.pathname === item.path;
+          const isActive = pathname === item.path;
           
           return (
             <button
               key={item.path}
-              onClick={() => navigate(item.path)}
+              onClick={() => router.push(item.path)}
               className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-left transition-all duration-200 ${
                 isActive
                   ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-lg'
@@ -138,7 +138,7 @@ const Sidebar = () => {
       {/* Bottom Actions */}
       <div className="p-4 border-t border-gray-200 space-y-2">
         <button
-          onClick={() => navigate('/management/settings')}
+          onClick={() => router.push('/management/settings')}
           className="w-full flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-xl transition-all duration-200"
         >
           <Settings className="w-5 h-5 text-gray-500" />
@@ -146,7 +146,7 @@ const Sidebar = () => {
         </button>
         
         <button
-          onClick={() => navigate('/management/help')}
+          onClick={() => router.push('/management/help')}
           className="w-full flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-xl transition-all duration-200"
         >
           <HelpCircle className="w-5 h-5 text-gray-500" />

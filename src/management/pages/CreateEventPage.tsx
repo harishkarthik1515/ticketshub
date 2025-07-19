@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { 
   ArrowLeft, ArrowRight, Upload, X, Plus, Trash2, 
   Calendar, MapPin, Clock, Users, DollarSign, Image as ImageIcon,
@@ -65,7 +65,7 @@ interface EventData {
 }
 
 const CreateEventPage = () => {
-  const navigate = useNavigate();
+  const router = useRouter();
   const { user } = useManagementAuth();
   const fileInputRef = useRef<HTMLInputElement>(null);
   
@@ -311,12 +311,7 @@ const CreateEventPage = () => {
       await new Promise(resolve => setTimeout(resolve, 2000));
 
       // Navigate to success page or dashboard
-      navigate('/management/dashboard', { 
-        state: { 
-          message: 'Event created successfully! It will be reviewed and published soon.',
-          eventId: newEvent.id 
-        }
-      });
+      router.push('/management/dashboard');
 
     } catch (error) {
       console.error('Error creating event:', error);
@@ -1012,7 +1007,7 @@ const CreateEventPage = () => {
                 <p className="text-gray-600 mt-1">Set up your event with all the details</p>
               </div>
               <button
-                onClick={() => navigate('/management/dashboard')}
+                onClick={() => router.push('/management/dashboard')}
                 className="flex items-center space-x-2 text-gray-600 hover:text-gray-900 transition-colors duration-200"
               >
                 <ArrowLeft className="w-5 h-5" />

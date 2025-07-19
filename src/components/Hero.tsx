@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { ChevronLeft, ChevronRight, Calendar, MapPin, Star } from 'lucide-react';
 import { getFeaturedEvents, getAllEventsWithTemp } from '../data/mockDatabase';
 
 const Hero = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const navigate = useNavigate();
+  const router = useRouter();
   
   // Get featured events including temporary ones
   const allEvents = getAllEventsWithTemp();
@@ -40,12 +40,12 @@ const Hero = () => {
     // Get current featured event
     const currentEvent = featuredEvents[currentSlide];
     if (currentEvent) {
-      navigate(`/event/${currentEvent.id}`);
+      router.push(`/event/${currentEvent.id}`);
     }
   };
 
   const handleBookNow = (eventId: number) => {
-    navigate(`/event/${eventId}`);
+    router.push(`/event/${eventId}`);
   };
 
   const getCardPosition = (index: number) => {
