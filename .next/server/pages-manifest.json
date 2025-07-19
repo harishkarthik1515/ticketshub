@@ -1,1 +1,10 @@
-{}
+{
+  "/_app": "pages/_app.js",
+  "/_error": "pages/_error.js",
+  "/BookingPage": "pages/BookingPage.js",
+  "/CategoryPage": "pages/CategoryPage.js",
+  "/EventDetailsPage": "pages/EventDetailsPage.js",
+  "/ProfilePage": "pages/ProfilePage.js",
+  "/StatePage": "pages/StatePage.js",
+  "/_document": "pages/_document.js"
+}
