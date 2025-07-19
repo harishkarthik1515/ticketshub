@@ -7,5 +7,6 @@
   "/management/messages/page": "app/management/messages/page.js",
   "/management/analytics/page": "app/management/analytics/page.js",
   "/event/[eventId]/page": "app/event/[eventId]/page.js",
-  "/booking/[eventId]/page": "app/booking/[eventId]/page.js"
+  "/booking/[eventId]/page": "app/booking/[eventId]/page.js",
+  "/state/[stateName]/page": "app/state/[stateName]/page.js"
 }
