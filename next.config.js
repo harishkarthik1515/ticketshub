@@ -9,8 +9,6 @@ const nextConfig = {
   },
   async rewrites() {
     return [
-      {
-      }
     ];
   }
 };
