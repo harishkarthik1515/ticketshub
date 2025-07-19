@@ -9,9 +9,6 @@ const nextConfig = {
   },
   async rewrites() {
     return [
-      {
-        source: '/management/:path*',
-        destination: '/management/:path*'
       }
     ];
   }
