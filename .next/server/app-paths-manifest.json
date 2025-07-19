@@ -3,5 +3,7 @@
   "/category/[category]/page": "app/category/[category]/page.js",
   "/management/page": "app/management/page.js",
   "/management/dashboard/page": "app/management/dashboard/page.js",
-  "/management/notifications/page": "app/management/notifications/page.js"
+  "/management/notifications/page": "app/management/notifications/page.js",
+  "/management/messages/page": "app/management/messages/page.js",
+  "/management/analytics/page": "app/management/analytics/page.js"
 }
